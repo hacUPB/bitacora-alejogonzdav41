@@ -39,3 +39,5 @@ PC: Para saber qué instrucción ejecutar en cada ciclo.
 D: Para realizar cálculos y transportar datos dentro de la CPU.
 
 A: Para acceder a memoria (leer o escribir en una posición)
+
+hola
