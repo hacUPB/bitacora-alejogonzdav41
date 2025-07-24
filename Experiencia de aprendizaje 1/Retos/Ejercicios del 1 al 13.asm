@@ -316,7 +316,7 @@ D;JLE
 
 // ¿Qué hace este programa?
 
-* 
+* Realiza la suma de los 10 elementos de arr y deja el resultado final en sum.
 
 // ¿Cuál es la dirección base de arr en la memoria RAM?
 
@@ -397,3 +397,10 @@ M=-1
 @4
 0;JGE
 ```
+
+// ¿Qué hace este programa?
+
+* Recorre la pantalla hacia adelante o atrás (dependiendo de si presionas una tecla o no) y enciende un bloque de 16 píxeles en la posición actual.
+* Si no se presiona tecla: el puntero de pantalla se mueve hacia atrás.
+* Si se presiona una tecla: el puntero se mueve hacia adelante.
+* Luego, en ambos casos, se pinta un bloque de píxeles (-1 = 0xFFFF = 16 bits en 1) en esa posición.
