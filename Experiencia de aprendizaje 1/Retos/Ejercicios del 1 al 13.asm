@@ -339,4 +339,61 @@ D=D-A
 D;JEQ
 ```
 
-// 18
+// 19
+
+// Inicializa el puntero de pantalla
+
+```
+@16384
+D=A
+@16
+M=D
+```
+
+// Lee el teclado
+
+```
+@24576
+D=M
+@19
+D;JNE
+```
+
+// Mueve el puntero hacia atrás si no se presiona tecla
+
+```
+@16
+D=M
+@16384
+D=D-A
+@4
+D;JLE
+@16
+M=M-1
+0;JMP
+```
+
+// Si se presiona tecla, mueve el puntero hacia adelante
+
+```
+@4
+0;JGE
+@16
+D=M
+@24576
+D=D-A
+@4
+D;JLT
+@16
+M=M+1
+0;JMP
+```
+
+// Escribe el valor -1 (0xFFFF) en la dirección apuntada (enciende píxeles)
+
+```
+@16
+M=-1
+@4
+0;JGE
+```
