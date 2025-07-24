@@ -231,3 +231,112 @@ M=D
 
 //13
 
+```
+@R0
+D=M
+@0
+D=D-A
+@R1
+D;JGE
+```
+
+// R0<0
+
+```
+@R1
+M=-1
+@LOOP
+0;JMP
+```
+
+// R0>=0
+```
+@R1
+M=1
+@LOOP
+0;JMP
+(LOOP)
+```
+
+// 14
+
+```
+@R1
+D=M
+@R4
+M=D
+```
+
+// 15
+
+```
+(LOOP)
+@R0
+A=M
+M=-1
+@R1
+M=M-1
+D=M
+@R0
+M=M+1
+@LOOP
+D;JNE
+```
+
+// 16
+
+```
+@10
+D=A
+@arr
+M=D
+D=M
+@sum
+M=0
+@j
+M=0
+(LOOP)
+@j
+A=D+M
+D=M
+@sum
+M=M+D
+@j
+M=M+1
+@10
+D=A
+@j
+D=D-M
+@LOOP
+D;JLE
+(END)
+@END
+0:JMP
+```
+
+// ¿Qué hace este programa?
+
+* 
+
+// ¿Cuál es la dirección base de arr en la memoria RAM?
+
+* 
+
+// ¿Cuál es la dirección base de sum en la memoria RAM y por qué?
+
+* 
+
+// ¿Cuál es la dirección base de j en la memoria RAM y por qué?
+
+* 
+
+// 17
+
+```
+@7
+D=D-A
+@69
+D;JEQ
+```
+
+// 18
