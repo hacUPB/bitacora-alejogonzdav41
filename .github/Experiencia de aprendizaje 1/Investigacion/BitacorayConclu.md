@@ -57,3 +57,5 @@ A: Para acceder a memoria (leer o escribir en una posición)
 18 y 20. Vimos como hacer un simple dibujo puede llegar a tomar muchas lineas de codigo en ensamblador.
 
 19. Aprendi mas sobre el lenguaje de maquina y pude decifrar adecuadamente que era lo que hacia ese programa.
+
+.
