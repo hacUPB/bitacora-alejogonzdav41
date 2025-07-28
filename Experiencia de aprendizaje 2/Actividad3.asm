@@ -3,6 +3,7 @@
 // Despues comparamos el resultado para saber si se realizara el salto a @DRAW, si se cumple la igualdaad a 0 se procedera a al dibujo, si no segura en el loop.
 // Esto nos dirige a la pantalla por medio del @SCREEN
 // Corremos el codigo del dibujo que al finalizar volvera al loop para asegurarse de que se siga cumpliendo la condicion
+// En caso de que no se este presionando la tecla D se limpiara el dibujo
 
 (LOOP)
 @24576
@@ -280,6 +281,6 @@ D=D+A // D = addr + val
 A=D-A // A=addr + val - val = addr
 M=A-D // RAM[addr]=-val
 // return
-@R13
+@24576
 A=M
 D;JMP
