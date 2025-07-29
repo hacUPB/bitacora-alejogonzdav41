@@ -43,4 +43,4 @@
 
 **Investiga el funcionamiento del programa con el simulador.**
 
-* 
+* Es un programa que espera a que sea presionada la tecla K para dibujar una linea.
