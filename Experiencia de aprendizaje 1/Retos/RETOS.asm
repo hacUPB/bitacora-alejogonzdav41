@@ -683,6 +683,5 @@ AD=D+A
 	A=D-A // A=addr + val - val = addr
 	M=A-D // RAM[addr]=-val
 	// return
-	@R13
-	A=M
-	D;JMP
+@LOOP
+    0;JMP
