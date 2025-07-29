@@ -5,15 +5,39 @@
 // Corremos el codigo del dibujo que al finalizar volvera al loop para asegurarse de que se siga cumpliendo la condicion
 // En caso de que no se este presionando la tecla D se limpiara el dibujo
 
-/* (LOOP)
+(LOOP)
 @24576
 D=M
 @100
 D=D-A
 @draw
 D;JEQ
-@LOOP
-0;JMP
+@CLEAR
+@0
+D=M
+(CLEAR)
+    @SCREEN
+    D=A
+    @addr
+    M=D 
+
+(CLEAR_LOOP)
+    @addr
+    A=M
+    M=0        // Apaga 16 pixeles
+
+    @addr
+    M=M+1      // addr++
+
+    @addr
+    D=M
+    @24576     // Dirección KBD (fin de memoria de pantalla)
+    D=A-D
+    @CLEAR_LOOP
+    D;JGT      // Mientras addr < 24576
+
+    @LOOP
+    0;JMP
 (draw)
 // put bitmap location value in R12
 // put code return address in R13
@@ -281,6 +305,5 @@ D=D+A // D = addr + val
 A=D-A // A=addr + val - val = addr
 M=A-D // RAM[addr]=-val
 // return
-@24576
-A=M
-D;JMP */
+@LOOP
+0;JMP
