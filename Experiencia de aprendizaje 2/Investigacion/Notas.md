@@ -44,3 +44,7 @@
 **Investiga el funcionamiento del programa con el simulador.**
 
 * Es un programa que espera a que sea presionada la tecla K para dibujar una linea.
+
+### Actividad 4
+
+* Creo que el codigo no funciona porque tal vez codifique mal el clear con la e
