@@ -1,0 +1,13 @@
+@10
+D=A
+@var
+M=D
+@var
+D=A
+@p
+M=D
+@20
+D=A
+@p
+A=M
+M=D
