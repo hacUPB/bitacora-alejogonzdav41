@@ -11,7 +11,7 @@
 
 **Inventa un programa que haga uso de la entrada-salida mapeada a memoria.**
 
-```js8765
+```js
 (LOOP)
     @24576     // Dirección del teclado (KBD)
     D=M
