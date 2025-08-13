@@ -34,7 +34,7 @@ Establece el color actual y dibuja el circulo.
 
 **Actividad 3**
 
-Agregue dos lines de codigo, una en draw() para que se dibujara un triangulo:
+Agregue dos lines de codigo, una en draw() para que se dibujara un triangulo, para esto le puse una coordenada a cada uno de los vertices e hice que los mismos actualizaran su posicion segun el movimiento del mouse:
 ```
 ofDrawTriangle(pos.x -250, pos.y +50, pos.x +50, pos.y -200, pos.x +450, pos.y +200);
 
@@ -43,3 +43,33 @@ Y otra en mouseMoved() para que cambie de color siempre que se mueva el mouse:
 ```
 particleColor = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 ```
+
+**Actividad 5**
+
+* ¿Cuál es la definición de un puntero?
+
+Se puede definir a un puntero como aquella variable que puede almacenar la direccion de memoria de otra variable.
+
+* ¿Dónde está el puntero?
+
+En ofApp.h
+
+* ¿Cómo se inicializa el puntero?
+
+Con las lineas de codigo:
+```
+  vector<Sphere> spheres;
+        Sphere selectedSphere;
+```
+
+* ¿Para qué se está usando el puntero?
+
+
+
+* ¿Qué es exactamente lo que está almacenado en el puntero?
+
+
+
+**Actividad 6**
+
+El problema es que al tomar un circulo ya no lo puedes volver a soltar.
