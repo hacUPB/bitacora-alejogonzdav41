@@ -31,3 +31,15 @@ No logro ver si realiza alguna accion.
 * ¿Qué hace la función draw?
 
 Establece el color actual y dibuja el circulo.
+
+**Actividad 3**
+
+Agregue dos lines de codigo, una en draw() para que se dibujara un triangulo:
+```
+ofDrawTriangle(pos.x -250, pos.y +50, pos.x +50, pos.y -200, pos.x +450, pos.y +200);
+
+```
+Y otra en mouseMoved() para que cambie de color siempre que se mueva el mouse:
+```
+particleColor = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
+```
