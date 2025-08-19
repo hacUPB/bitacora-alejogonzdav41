@@ -98,3 +98,9 @@ Se crea una esfera en el heap y su puntero se guarda en el vector.
 * ¿Por qué ocurre esto?
 
 Debido a que el heap no elimina la esfera al terminar su funcion cosa que resuelve el problema del puntero y lo hace valido.
+
+**Actividad 9**
+
+* ¿Qué sucede cuando presionas la tecla “f”?
+
+Se eliminan los circulos creados al dar click.S
