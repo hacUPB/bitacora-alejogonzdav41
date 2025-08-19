@@ -64,12 +64,37 @@ Con las lineas de codigo:
 
 * ¿Para qué se está usando el puntero?
 
-
+Guarda la direccion de memoria de la esfera lo cual sirve para interactuar con la misma.
 
 * ¿Qué es exactamente lo que está almacenado en el puntero?
 
-
+La direccion de memoria de la esfera seleccionada.
 
 **Actividad 6**
 
 El problema es que al tomar un circulo ya no lo puedes volver a soltar.
+
+```cpp
+void mouseReleased(int x, int y, int button);
+```
+```cpp
+void ofApp::mouseReleased(int x, int y, int button){
+    if(button == OF_MOUSE_BUTTON_LEFT){
+        selectedSphere = nullptr;
+    }
+}
+```
+
+**Actividad 7**
+
+* ¿Qué sucede cuando presionas la tecla “c”? (1)
+
+Cuando se presiona la tecla “c”, el programa crea una esfera que se borra al terminar la función luego el vector guarda su dirección, pero como esa memoria ya no existe, el puntero queda malo y el programa puede mostrar distintos errores, sean fallos o mostrando cosas erroneas.
+
+* ¿Qué sucede cuando presionas la tecla “c”? (2)
+
+Se crea una esfera en el heap y su puntero se guarda en el vector.
+
+* ¿Por qué ocurre esto?
+
+Debido a que el heap no elimina la esfera al terminar su funcion cosa que resuelve el problema del puntero y lo hace valido.
