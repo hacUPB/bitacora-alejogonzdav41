@@ -183,3 +183,5 @@ int main() {
 }
 
 ```
+
+Los vectores de ofVec3f son gestionados dinámicamente en el heap, mientras que el contenedor std::vector vive en el stack como parte de la clase ofApp. La combinación de stack (para control rápido) y heap (para almacenamiento flexible) hace que la aplicación maneje eficientemente miles de esferas en tiempo real.
