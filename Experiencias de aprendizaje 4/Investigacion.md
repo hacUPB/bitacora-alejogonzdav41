@@ -176,3 +176,57 @@ Esto ayudaria a tener un mejor aprovechamiento de la memoria, lo que es ideal cu
 **5. ¿Qué problemas podrían surgir si no se gestionan correctamente los punteros front y rear en una queue, y cómo podrías evitarlos? Considera posibles errores como la pérdida de referencias a nodos y cómo una gestión cuidadosa de los punteros puede prevenir estos problemas.**
 
 * Pérdida de referencias, punteros colgantes o cola vacía mal manejada.
+
+***De Manera General***
+
+Conceptos teóricos
+
+Pila (stack): funciona con la regla LIFO (Last In, First Out). El último que entra es el primero que sale.
+
+Cola (queue): funciona con la regla FIFO (First In, First Out). El primero que entra es el primero que sale.
+
+Nodo: cada elemento de la pila/cola (en este caso, un círculo). Tiene datos y un puntero al siguiente nodo.
+
+Punteros importantes:
+
+top → indica la parte superior de la pila.
+
+front → indica el frente de la cola (el que sale primero).
+
+rear → indica el final de la cola (donde se insertan los nuevos elementos).
+
+2. Operaciones
+
+Push: agrega un nodo a la pila.
+
+Pop: quita el nodo que está arriba de la pila.
+
+Enqueue: agrega un nodo al final de la cola.
+
+Dequeue: quita el nodo que está al frente de la cola.
+
+3. Memoria y depuración
+
+Cada nodo se guarda en memoria dinámica (new en C++).
+
+Cuando quitas un nodo (pop o dequeue), usas delete para liberar memoria.
+
+Si no liberas memoria, pasa una fuga de memoria (memory leak).
+
+4. Manejo de casos especiales
+
+Stack vacío: top apunta a nullptr.
+
+Queue vacía: tanto front como rear apuntan a nullptr.
+
+Un solo elemento en la cola: front y rear apuntan al mismo nodo.
+
+5. Visualización en el programa
+
+Los círculos que ves en la pantalla representan los nodos.
+
+Con la tecla a los agregas.
+
+Con la tecla d los quitas.
+
+Según estés en modo stack o queue, se comportan distinto (LIFO o FIFO).
