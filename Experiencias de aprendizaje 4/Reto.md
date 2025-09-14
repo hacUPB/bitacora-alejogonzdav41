@@ -15,3 +15,143 @@ La interacción del usuario puede influir en varias estructuras de datos al mism
 4. **Optimización:** ¿Qué técnicas puedes implementar para optimizar la gestión de memoria y el rendimiento de tu aplicación mientras mantienes una experiencia visual rica y fluida?
 
 Para que el programa funcione de manera fluida, es importante usar técnicas de optimización. Una de ellas es darle a cada estrella un tiempo de vida limitado para que desaparezca sola cuando se cumpla. Otra es reutilizar objetos en lugar de crear y borrar constantemente, lo que ahorra memoria y tiempo de ejecución. También es útil poner un límite a la cantidad de estrellas que pueden existir al mismo tiempo y dibujar solo las que son visibles en pantalla. Así, la experiencia visual se mantiene rica y el rendimiento del programa no se ve afectado.
+
+***Codigo***
+
+**main.cpp**
+```cpp
+#include "ofApp.h"
+#include "ofMain.h"
+
+int main() {
+	ofSetupOpenGL(1024, 768, OF_WINDOW);
+	ofRunApp(new ofApp());
+}
+```
+
+**ofApp.cpp**
+```cpp
+#include "ofApp.h"
+
+void ofApp::setup() {
+	ofBackground(0);
+	ofSetFrameRate(60);
+}
+
+void ofApp::update() {
+	for (int i = stars.size() - 1; i >= 0; i--) {
+		stars[i]->update();
+		if (stars[i]->isDead()) {
+			delete stars[i];
+			stars.erase(stars.begin() + i);
+		}
+	}
+}
+
+void ofApp::draw() {
+	for (auto & star : stars) {
+		star->draw();
+	}
+
+	for (int i = 0; i < stars.size(); i++) {
+		for (int j = i + 1; j < stars.size(); j++) {
+			float d = ofDist(stars[i]->pos.x, stars[i]->pos.y,
+				stars[j]->pos.x, stars[j]->pos.y);
+			if (d < 150) {
+				ofSetColor(150, 150, 255, ofMap(d, 0, 150, 255, 0));
+				ofDrawLine(stars[i]->pos, stars[j]->pos);
+			}
+		}
+	}
+}
+
+void ofApp::mousePressed(int x, int y, int button) {
+	ofPoint randomPos(ofRandomWidth(), ofRandomHeight());
+	stars.push_back(new Star(randomPos));
+}
+```
+
+**ofApp.h**
+```cpp
+#pragma once
+#include "ofMain.h"
+
+class Star {
+public:
+	ofPoint pos;
+	float size;
+	int lifetime;
+
+	Star(ofPoint _pos) {
+		pos = _pos;
+		size = ofRandom(2, 5);
+		lifetime = ofRandom(200, 400);
+	}
+
+	void update() {
+		lifetime--;
+	}
+
+	void draw() {
+		ofSetColor(255, 255, 200);
+		ofDrawCircle(pos, size);
+	}
+
+	bool isDead() {
+		return lifetime <= 0;
+	}
+};
+
+class ofApp : public ofBaseApp {
+public:
+	void setup();
+	void update();
+	void draw();
+
+	void mousePressed(int x, int y, int button);
+
+	vector<Star *> stars;
+};
+```
+
+***RAE1: Construcción de aplicaciones interactivas***
+
+Para cumplir con este resultado construí una obra de arte generativo de constelaciones dinámicas usando openFrameworks.
+
+* El programa crea estrellas de manera dinámica cuando se hace clic con el mouse.
+
+* Cada estrella aparece en una posición aleatoria dentro de la pantalla, tiene un tamaño distinto y una duración de vida limitada.
+
+* Las estrellas se van uniendo con líneas cuando están cerca, generando un efecto visual de constelaciones.
+
+* El ciclo de vida de cada estrella está gestionado dinámicamente: cuando una estrella "muere", se libera la memoria para evitar fugas.
+
+![Estrellas creadas con click](image-1.png)
+
+![Constelaciones formadas](image-2.png)
+
+***RAE2: Pruebas de las partes y del todo***
+
+**Pruebas de las partes (unitarias):**
+
+* Probé la creación de una estrella individual para verificar que aparecía en pantalla con un tamaño y posición aleatoria.
+
+* Verifiqué que la duración de vida funcionaba, esperando varios segundos hasta que la estrella desapareciera.
+
+* Revisé que, al desaparecer, la estrella se eliminaba correctamente de la memoria para que no hubiera fugas.
+
+* Probé que las líneas solo se dibujaban cuando las estrellas estaban cerca (distancia menor a 150).
+
+**Pruebas del todo (integración):**
+
+* Hice clics en varias zonas para comprobar que las estrellas aparecían siempre en posiciones aleatorias.
+
+* Observé cómo las estrellas viejas se iban eliminando mientras se mantenían las nuevas, asegurando que el programa siempre estuviera fluido.
+
+* Probé la interacción repetida (muchos clics seguidos) para comprobar que la memoria no se llenaba y la aplicación seguía estable.
+
+* Verifiqué que el efecto visual final fuera coherente y se asemejara a una constelación dinámica.
+
+![Una sola estrella generada](image-3.png)
+
+![Multiples estrellas juntas conectadas por lineas y formando constelaciones](image-4.png)
