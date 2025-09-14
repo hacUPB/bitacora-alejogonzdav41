@@ -155,3 +155,7 @@ Para cumplir con este resultado construí una obra de arte generativo de constel
 ![Una sola estrella generada](image-3.png)
 
 ![Multiples estrellas juntas conectadas por lineas y formando constelaciones](image-4.png)
+
+***Prueba en video***
+
+(Video)[https://www.youtube.com/watch?v=T8_UXdG8VJM]
