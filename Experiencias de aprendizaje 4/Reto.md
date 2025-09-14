@@ -158,4 +158,4 @@ Para cumplir con este resultado construí una obra de arte generativo de constel
 
 ***Prueba en video***
 
-(Video)[https://www.youtube.com/watch?v=T8_UXdG8VJM]
+[Video](https://www.youtube.com/watch?v=T8_UXdG8VJM)
