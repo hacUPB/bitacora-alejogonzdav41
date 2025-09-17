@@ -98,3 +98,19 @@ Cuando una clase usa variables estáticas, esas variables no ocupan espacio dent
 Estáticas: 1 sola copia para todos → no afectan el tamaño del objeto.
 
 Dinámicas: cada objeto tiene un puntero + memoria aparte en el heap.
+
+***Reflexión***
+
+Documenta en tu bitácora de aprendizaje:
+
+**¿Qué es un objeto desde la perspectiva de la memoria?**
+
+* 
+
+**¿Cómo influyen los atributos y métodos en el tamaño y estructura del objeto?**
+
+* 
+
+**Conclusión: resumir los hallazgos y cómo esto impacta el diseño de clases.**
+
+* 
