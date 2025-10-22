@@ -160,7 +160,7 @@ El vertex shader ajusta la posición del plano y la textura de acuerdo con el mo
 
 **¿Qué resultados obtuviste?**
 
-
+![alt text](<Screenshot 2025-10-22 151721.png>)
 
 **¿Estás usando un vertex shader?**
 
@@ -177,7 +177,7 @@ El vertex shader ajusta la posición del plano y la textura de acuerdo con el mo
 
 **¿Qué resultados obtuviste?**
 
-
+![alt text](<Screenshot 2025-10-22 151901.png>)
 
 **¿Estás usando un vertex shader?**
 
@@ -194,7 +194,8 @@ El vertex shader ajusta la posición del plano y la textura de acuerdo con el mo
 
 **¿Qué resultados obtuviste?**
 
-
+![alt text](<Screenshot 2025-10-22 152117.png>)
+![alt text](<Screenshot 2025-10-22 152039.png>)
 
 **¿Estás usando un vertex shader?**
 
@@ -211,7 +212,7 @@ El vertex shader ajusta la posición del plano y la textura de acuerdo con el mo
 
 **¿Qué resultados obtuviste?**
 
-
+![alt text](<Screenshot 2025-10-22 152327.png>)
 
 **¿Estás usando un vertex shader?**
 
@@ -228,7 +229,7 @@ El vertex shader ajusta la posición del plano y la textura de acuerdo con el mo
 
 **¿Qué resultados obtuviste?**
 
-
+![alt text](<Screenshot 2025-10-22 152434.png>)
 
 **¿Estás usando un vertex shader?**
 
