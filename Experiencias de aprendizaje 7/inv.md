@@ -266,3 +266,9 @@ Sí, se utiliza un fragment shader, que es el encargado de realizar el desenfoqu
 
 - El shaderBlurY realiza el mismo proceso pero en el eje vertical (Y), combinando los píxeles de arriba a abajo.
 Al trabajar juntos, ambos shaders producen un desenfoque uniforme en todas las direcciones de la imagen.
+
+### Actividad 3
+
+**¿Qué es un uniform?**
+
+Variable global y constante que se envia de la CPU a la GPU
