@@ -64,28 +64,67 @@ Sirve para saber qué objetos están más cerca o más lejos de la cámara. Así
 
 ### Actividad 2
 
+
+#### Ejemplo 1
+
 **¿Cómo funciona?**
-El programa usa shaders para cambiar cómo se dibuja el rectángulo en pantalla. El shader toma cada fragmento (píxel) del rectángulo y decide su color según el código del fragment shader. Cuando el shader está activo, la GPU se encarga de aplicar esas instrucciones directamente mientras dibuja.
+
 
 **¿Qué resultados obtuviste?**
 
-Cuando comenté las líneas del shader.begin() y shader.end(), el rectángulo se dibujó normal, de color blanco (el color por defecto de ofSetColor(255)).
-Cuando volví a activar el shader, la pantalla cambió: se llenó de colores que variaban según las coordenadas, mostrando un efecto visual generado por el shader. En resumen, con el shader activo se ve una imagen generada por GPU, sin él solo se ve el rectángulo blanco.
 
 **¿Estás usando un vertex shader?**
 
-Sí. El vertex shader está activo y se ejecuta sobre los vértices del rectángulo (las esquinas). En este caso, probablemente no cambia su posición, pero igual pasa los datos necesarios al fragment shader.
 
 **¿Estás usando un fragment shader?**
 
-Sí. El fragment shader es el que realmente genera los colores que se ven en pantalla. Es el encargado de decidir el color final de cada píxel, por eso es el que produce el efecto visual.
 
 **Analiza el código de los shaders. ¿Qué hace cada uno?**
 
-- Vertex shader:
+#### Ejemplo 2
 
-Recibe las coordenadas de los vértices del rectángulo y las transforma a la posición correcta para mostrarlas en pantalla. En este ejemplo, solo pasa la información sin cambiarla mucho (usa las transformaciones por defecto).
+**¿Cómo funciona?**
 
-- Fragment shader:
 
-Se ejecuta por cada píxel del rectángulo y calcula el color. En el ejemplo del tutorial, usa las coordenadas del píxel (gl_FragCoord) para generar un color que cambia dependiendo de la posición, creando un degradado o patrón visual.
+**¿Qué resultados obtuviste?**
+
+
+**¿Estás usando un vertex shader?**
+
+
+**¿Estás usando un fragment shader?**
+
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
+
+#### Ejemplo 3
+
+**¿Cómo funciona?**
+
+
+**¿Qué resultados obtuviste?**
+
+
+**¿Estás usando un vertex shader?**
+
+
+**¿Estás usando un fragment shader?**
+
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
+
+#### Ejemplo 4
+
+**¿Cómo funciona?**
+
+
+**¿Qué resultados obtuviste?**
+
+
+**¿Estás usando un vertex shader?**
+
+
+**¿Estás usando un fragment shader?**
+
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
