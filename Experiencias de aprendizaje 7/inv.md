@@ -271,4 +271,34 @@ Al trabajar juntos, ambos shaders producen un desenfoque uniforme en todas las d
 
 **¿Qué es un uniform?**
 
-Variable global y constante que se envia de la CPU a la GPU
+Variable global y constante que se envia de la CPU a la GPU.
+
+**¿Cómo funciona el código de aplicación, los shaders y cómo se comunican estos?**
+
+En una aplicación que usa gráficos por computadora (como juegos o programas 3D), el trabajo se divide entre dos partes principales: el código de la aplicación y los shaders.
+
+El código de la aplicación (normalmente escrito en C++, C#, o JavaScript, según el motor o librería que se use) se ejecuta en el CPU.
+Este código se encarga de:
+
+- Crear la ventana o el entorno donde se dibuja.
+
+- Cargar modelos, texturas, luces y cámaras.
+
+- Enviar los datos a la tarjeta gráfica (GPU).
+
+- Decirle a la GPU qué shader usar y con qué valores.
+
+Los shaders, en cambio, son pequeños programas que se ejecutan en la GPU.
+Están escritos en lenguajes como GLSL o HLSL, y se encargan de dibujar los píxeles y procesar los vértices de los objetos.
+
+Por ejemplo:
+
+- El vertex shader calcula la posición de cada punto (vértice) del modelo.
+
+- El fragment shader calcula el color final de cada fragmento (píxel) en la pantalla.
+
+***Comunicación entre ambos:***
+El código de la aplicación manda datos a los shaders por medio de variables uniformes o buffers.
+Por ejemplo, puede enviar la posición de la cámara, la intensidad de la luz o el color del objeto.
+El shader recibe esa información y la usa para calcular cómo se debe ver la imagen final.
+
