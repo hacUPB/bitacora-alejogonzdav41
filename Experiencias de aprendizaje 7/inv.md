@@ -302,3 +302,57 @@ El código de la aplicación manda datos a los shaders por medio de variables un
 Por ejemplo, puede enviar la posición de la cámara, la intensidad de la luz o el color del objeto.
 El shader recibe esa información y la usa para calcular cómo se debe ver la imagen final.
 
+**Modifica el código de la actividad para cambiar el color de cada uno de los píxeles de la pantalla personalizando el fragment shader.**
+
+***Cambios en el código***
+
+shaderfrag GL3
+```cpp
+#version 150
+
+uniform float time;
+uniform vec4 globalColor;
+
+out vec4 outputColor;
+
+void main()
+{
+    // Normaliza coordenadas del fragmento entre 0 y 1
+    vec2 uv = gl_FragCoord.xy / vec2(1024.0, 768.0); // usa el tamaño de la ventana
+
+    // Crea un efecto de ondas de color animadas
+    float wave = sin((uv.x + time * 0.5) * 6.2831) * 0.5 + 0.5;
+
+    // Gradiente basado en Y y onda temporal
+    vec3 color = mix(vec3(uv.y, wave, 1.0 - uv.x), globalColor.rgb, 0.3);
+
+    outputColor = vec4(color, 1.0);
+}
+
+```
+
+shaderfrag GL2
+```cpp
+precision mediump float;
+
+uniform float time;
+uniform vec4 globalColor;
+
+void main()
+{
+    vec2 uv = gl_FragCoord.xy / vec2(1024.0, 768.0);
+    float wave = sin((uv.x + time * 0.5) * 6.2831) * 0.5 + 0.5;
+    vec3 color = mix(vec3(uv.y, wave, 1.0 - uv.x), globalColor.rgb, 0.3);
+    gl_FragColor = vec4(color, 1.0);
+}
+
+```
+
+ofApp::draw()
+```cpp
+shader.setUniform1f("time", ofGetElapsedTimef());
+
+```
+
+![alt text](<Screenshot 2025-10-27 162416.png>)
+
