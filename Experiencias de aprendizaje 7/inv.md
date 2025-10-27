@@ -485,4 +485,10 @@ void main() {
 
 ```
 
+![alt text](<Screenshot 2025-10-27 164831.png>)
+
 En esta versión el programa fue modificado para que el plano tenga movimiento y cambie de color según el mouse. En el código de C++ se añadieron nuevas variables que se envían al shader, como el tiempo, la posición del mouse y una amplitud que controla la altura de las ondas. En el vertex shader se usaron funciones seno y coseno para mover los vértices y crear un efecto de ondas animadas, mientras que el fragment shader mezcla la textura con un color que cambia de cian a magenta según la posición del mouse. Esto hace que la imagen se vea viva y responda al movimiento del usuario.
+
+## Reto
+
+**Con lo que aprendiste en esta unidad vas a realizar una aplicación interactiva que utilice shaders.**
