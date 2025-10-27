@@ -356,3 +356,133 @@ shader.setUniform1f("time", ofGetElapsedTimef());
 
 ![alt text](<Screenshot 2025-10-27 162416.png>)
 
+### Actividad 4
+
+**¿Qué hace el código del ejemplo?**
+
+El código muestra un plano con una imagen en el centro de la pantalla y permite que cambie visualmente cuando el usuario mueve el mouse. A medida que se mueve el mouse, la textura parece desplazarse y el color pasa de magenta a azul, creando un efecto interactivo. En otras palabras, el programa combina una imagen, el movimiento del mouse y los shaders para generar una animación visual en tiempo real.
+
+**¿Cómo funciona el código de aplicación, los shaders y cómo se comunican estos?**
+
+El código de la aplicación en C++ se encarga de configurar la ventana, cargar la imagen, preparar el plano y enviar al shader la información del mouse y el color. Los shaders son programas que corren en la tarjeta gráfica: el vertex shader ajusta la posición y las coordenadas del plano, y el fragment shader pinta cada píxel con el color y la textura. Ambos se comunican con el código de la aplicación por medio de variables llamadas uniforms, que permiten que el shader reciba valores desde el programa principal, como la posición del mouse o el color, para crear los efectos visuales interactivos.
+
+**Realiza modificaciones a ofApp.cpp y al vertex shader para conseguir otros comportamientos y Realiza modificaciones al fragment shader para conseguir otros comportamientos.**
+
+ofApp.cpp
+```cpp
+#include "ofApp.h"
+
+//--------------------------------------------------------------
+void ofApp::setup() {
+	ofDisableArbTex();
+
+	if(ofIsGLProgrammableRenderer()){
+		shader.load("shadersGL3/shader");
+	}else{
+		shader.load("shadersGL2/shader");
+	}
+
+	if(img.load("img.jpg")) {
+		img.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
+	}
+
+	plane.set(800, 600, 100, 100); // más subdivisiones para que la onda se note mejor
+	plane.mapTexCoords(0, 0, img.getWidth(), img.getHeight());
+	ofSetFrameRate(60);
+}
+
+//--------------------------------------------------------------
+void ofApp::update() {
+
+}
+
+//--------------------------------------------------------------
+void ofApp::draw() {
+	ofBackground(0);
+
+	shader.begin();
+
+	// Centro de la pantalla
+	float cx = ofGetWidth() / 2.0;
+	float cy = ofGetHeight() / 2.0;
+	ofTranslate(cx, cy);
+
+	// Enviamos valores al shader (uniforms)
+	shader.setUniform1f("time", ofGetElapsedTimef());
+	shader.setUniform2f("mousePos", mouseX - cx, mouseY - cy);
+	shader.setUniform1f("amplitude", ofMap(mouseY, 0, ofGetHeight(), 5, 50)); // controla altura de la onda
+
+	// Cambia el color base dependiendo del mouse
+	float percentX = mouseX / (float)ofGetWidth();
+	ofFloatColor colorLeft = ofColor::cyan;
+	ofFloatColor colorRight = ofColor::magenta;
+	ofFloatColor colorMix = colorLeft.getLerped(colorRight, percentX);
+	shader.setUniform4f("baseColor", colorMix);
+
+	img.bind();
+	plane.draw(); // dibuja el plano con textura
+	img.unbind();
+
+	shader.end();
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key){ }
+void ofApp::keyReleased(int key){ }
+void ofApp::mouseMoved(int x, int y){ }
+void ofApp::mouseDragged(int x, int y, int button){ }
+void ofApp::mousePressed(int x, int y, int button){ }
+void ofApp::mouseReleased(int x, int y, int button){ }
+void ofApp::windowResized(int w, int h){ }
+void ofApp::gotMessage(ofMessage msg){ }
+void ofApp::dragEvent(ofDragInfo dragInfo){ }
+
+```
+
+shader.vert
+```cpp
+#version 150
+
+uniform mat4 modelViewProjectionMatrix;
+uniform float time;
+uniform vec2 mousePos;
+uniform float amplitude;
+
+in vec4 position;
+in vec2 texcoord;
+
+out vec2 texCoordVarying;
+
+void main() {
+    // Crea un efecto de onda en la superficie
+    float wave = sin(position.x * 0.05 + time * 2.0) * amplitude;
+    float wave2 = cos(position.y * 0.05 + time * 1.5) * amplitude * 0.5;
+
+    vec4 modifiedPosition = position;
+    modifiedPosition.z += wave + wave2;
+
+    texCoordVarying = texcoord;
+
+    gl_Position = modelViewProjectionMatrix * modifiedPosition;
+}
+
+```
+
+shader.frag
+```cpp
+#version 150
+
+uniform sampler2D tex0;
+uniform vec4 baseColor;
+
+in vec2 texCoordVarying;
+out vec4 outputColor;
+
+void main() {
+    vec4 texColor = texture(tex0, texCoordVarying / 512.0);
+    outputColor = texColor * baseColor;
+}
+
+```
+
+En esta versión el programa fue modificado para que el plano tenga movimiento y cambie de color según el mouse. En el código de C++ se añadieron nuevas variables que se envían al shader, como el tiempo, la posición del mouse y una amplitud que controla la altura de las ondas. En el vertex shader se usaron funciones seno y coseno para mover los vértices y crear un efecto de ondas animadas, mientras que el fragment shader mezcla la textura con un color que cambia de cian a magenta según la posición del mouse. Esto hace que la imagen se vea viva y responda al movimiento del usuario.
