@@ -492,3 +492,181 @@ En esta versión el programa fue modificado para que el plano tenga movimiento y
 ## Reto
 
 **Con lo que aprendiste en esta unidad vas a realizar una aplicación interactiva que utilice shaders.**
+
+**RAE1**
+
+**La construcción de la aplicación que propone el reto.**
+
+- Tomé como referencia el ejemplo 3.
+
+- Antes, el plano se deformaba en forma de esfera alrededor del mouse porque el shader medía la distancia con una raíz cuadrada, que genera un movimiento circular.
+
+- Luego cambié eso por una distancia cúbica, que mide los lados en forma cuadrada. Por eso, la deformación parece una caja que empuja los vértices.
+
+- También hice que el color cambie más rápido cuando el mouse está abajo y más lento cuando está arriba, usando la posición vertical para modificar la velocidad del cambio de color.
+
+**Vas a explicar detalladamente cómo funciona la aplicación.**
+
+- La aplicación crea un plano lleno de pequeños vértices que se deforma cuando movemos el mouse, haciendo que parezca que una figura cúbica empuja la superficie. Esto se logra con un shader que cambia la posición de los puntos del plano según la distancia al mouse, pero usando una forma cuadrada en vez de redonda. Además, el color del plano va cambiando constantemente, y la velocidad de ese cambio depende de la posición vertical del mouse: si el mouse está arriba, el cambio de color es lento, y si está abajo, el color cambia más rápido. Todo esto se dibuja en tiempo real, generando un efecto visual dinámico e interactivo.
+
+**El código fuente de tu aplicación.**
+
+***ofApp.h***
+```cpp
+#pragma once
+#include "ofMain.h"
+
+class ofApp : public ofBaseApp {
+public:
+	void setup();
+	void update();
+	void draw();
+
+	void keyPressed(int key);
+	void keyReleased(int key);
+	void mouseMoved(int x, int y);
+	void mouseDragged(int x, int y, int button);
+	void mousePressed(int x, int y, int button);
+	void mouseReleased(int x, int y, int button);
+	void windowResized(int w, int h);
+	void dragEvent(ofDragInfo dragInfo);
+	void gotMessage(ofMessage msg);
+
+	ofShader shader;
+	ofPlanePrimitive plane;
+
+	float hue;
+};
+```
+
+***ofApp.cpp***
+```cpp
+#include "ofApp.h"
+
+//--------------------------------------------------------------
+void ofApp::setup() {
+	if (ofIsGLProgrammableRenderer()) {
+		shader.load("shadersGL3/shader");
+	} else {
+		shader.load("shadersGL2/shader");
+	}
+
+	int planeWidth = ofGetWidth();
+	int planeHeight = ofGetHeight();
+	int planeGridSize = 20;
+	int planeCols = planeWidth / planeGridSize;
+	int planeRows = planeHeight / planeGridSize;
+
+	plane.set(planeWidth, planeHeight, planeCols, planeRows, OF_PRIMITIVE_TRIANGLES);
+	hue = 0.0f;
+
+	ofSetFrameRate(60);
+	ofSetWindowTitle("Deformación cúbica interactiva");
+}
+
+//--------------------------------------------------------------
+void ofApp::update() {
+	float speed = ofMap(mouseY, 0, ofGetHeight(), 0.5, 3.0, true);
+	hue += speed;
+
+	if (hue > 255) hue -= 255;
+}
+
+//--------------------------------------------------------------
+void ofApp::draw() {
+	shader.begin();
+
+	float cx = ofGetWidth() / 2.0;
+	float cy = ofGetHeight() / 2.0;
+
+	float mx = mouseX - cx;
+	float my = mouseY - cy;
+
+	shader.setUniform1f("mouseRange", 150);
+	shader.setUniform2f("mousePos", mx, my);
+
+	ofColor c = ofColor::fromHsb(fmod(hue, 255), 255, 255);
+	float mouseColor[4] = { c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, 1.0f };
+	shader.setUniform4fv("mouseColor", mouseColor);
+
+	ofTranslate(cx, cy);
+	plane.drawWireframe();
+
+	shader.end();
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key) { }
+void ofApp::keyReleased(int key) { }
+void ofApp::mouseMoved(int x, int y) { }
+void ofApp::mouseDragged(int x, int y, int button) { }
+void ofApp::mousePressed(int x, int y, int button) { }
+void ofApp::mouseReleased(int x, int y, int button) { }
+void ofApp::windowResized(int w, int h) { }
+void ofApp::dragEvent(ofDragInfo dragInfo) { }
+void ofApp::gotMessage(ofMessage msg) { }
+```
+
+***shader.vert***
+```cpp
+#version 150
+
+uniform mat4 modelViewProjectionMatrix;
+in vec4 position;
+
+uniform float mouseRange;
+uniform vec2 mousePos;
+
+void main() {
+	vec4 pos = position;
+
+	vec2 dir = pos.xy - mousePos;
+
+	float dist = max(abs(dir.x), abs(dir.y));
+
+	if (dist > 0.0 && dist < mouseRange) {
+		float distNorm = dist / mouseRange;
+		distNorm = 1.0 - distNorm;
+		dir *= distNorm;
+
+		pos.x += sign(dir.x) * pow(abs(dir.x), 1.2);
+		pos.y += sign(dir.y) * pow(abs(dir.y), 1.2);
+	}
+
+	gl_Position = modelViewProjectionMatrix * pos;
+}
+```
+
+***shader.frag***
+```cpp
+#version 150
+
+out vec4 outputColor;
+uniform vec4 mouseColor;
+
+void main() {
+	outputColor = mouseColor;
+}
+```
+
+**Video prueba de funcionamiento**
+
+[video](https://youtu.be/qjS1JFlrCzk)
+
+**RAE2**
+
+**Explica y muestra cómo probaste la aplicación en ofApp.cpp.**
+
+- Para probar la aplicación, trabajé directamente desde el archivo ofApp.cpp, donde se ejecutan las funciones principales. Primero, en la función setup() cargué el shader y configuré el plano con varias divisiones para que la deformación se notara bien. Luego, en update() probé cómo cambiaba el color usando la posición del mouse, moviéndolo de arriba hacia abajo para ver si el cambio era lento o rápido según lo esperado. Finalmente, en draw() ejecuté el shader y moví el mouse por toda la ventana para comprobar que la forma que empuja el plano fuera cuadrada, no redonda. Cada vez que corría la aplicación, observaba en la pantalla cómo el plano se deformaba de forma cúbica alrededor del mouse y el color cambiaba según la posición vertical, confirmando que el código funcionaba correctamente.
+
+**Explica y muestra cómo probaste el vertex shader.**
+
+- Para probar el vertex shader, lo hice desde la misma aplicación ejecutando diferentes movimientos del mouse y observando cómo se deformaba el plano en pantalla. En el shader cambié la forma en que se calcula la distancia, usando max(abs(dir.x), abs(dir.y)) para generar una deformación cuadrada en lugar de circular. Luego compilé el programa y moví el mouse por la ventana: si el plano se hundía o se levantaba en forma de caja alrededor del puntero, sabía que el shader estaba funcionando bien. También ajusté el valor de mouseRange para ver cuánto influía el mouse en la deformación; al aumentar ese valor, la “onda cúbica” se extendía más, y al reducirlo, quedaba concentrada. Así confirmé que el vertex shader modificaba correctamente los vértices del plano según la posición del mouse y con la forma cúbica deseada.
+
+**Explica y muestra cómo probaste el fragment shader.**
+
+- Para probar el fragment shader, lo hice ejecutando la aplicación y observando los cambios de color en el plano mientras movía el mouse. En el código del fragment shader solo tengo una línea que asigna el color recibido desde el programa principal (outputColor = mouseColor;), así que la prueba consistió en verificar que ese color realmente cambiara. En ofApp.cpp, modifiqué la variable hue en la función update() para que variara según la posición vertical del mouse: cuando el mouse estaba arriba el color cambiaba lentamente, y cuando bajaba lo hacía más rápido. Al correr la aplicación, moví el cursor de arriba hacia abajo y comprobé que los tonos del plano iban rotando más despacio o más rápido dependiendo de la altura del mouse. Con esto confirmé que el fragment shader estaba recibiendo correctamente el color enviado desde la aplicación y lo aplicaba en tiempo real a toda la superficie del plano.
+
+**Explica y muestra cómo probaste toda la aplicación completa.**
+
+- Para probar toda la aplicación completa, primero la compilé y la ejecuté en openFrameworks para asegurarme de que tanto el código de C++ como los shaders funcionaran juntos. Al iniciar, el programa mostró un plano centrado en la pantalla. Luego moví el mouse por diferentes partes de la ventana: al pasar cerca del centro, el plano se deformaba en forma de cubo alrededor del cursor, lo que comprobó que el vertex shader hacía bien la deformación. Después moví el mouse hacia arriba y hacia abajo para verificar el cambio de color; observé que cuando el mouse estaba arriba el color cambiaba lentamente, y cuando bajaba se aceleraba, confirmando que el fragment shader y la lógica en update() funcionaban correctamente. También probé ajustar el rango de influencia (mouseRange) para ver cómo variaba la deformación y ejecuté la aplicación varias veces para confirmar que no hubiera errores visuales ni de rendimiento. Así verifiqué que toda la aplicación trabajaran de forma correcta y coordinada.
