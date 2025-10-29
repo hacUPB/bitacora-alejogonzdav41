@@ -670,3 +670,86 @@ void main() {
 **Explica y muestra cómo probaste toda la aplicación completa.**
 
 - Para probar toda la aplicación completa, primero la compilé y la ejecuté en openFrameworks para asegurarme de que tanto el código de C++ como los shaders funcionaran juntos. Al iniciar, el programa mostró un plano centrado en la pantalla. Luego moví el mouse por diferentes partes de la ventana: al pasar cerca del centro, el plano se deformaba en forma de cubo alrededor del cursor, lo que comprobó que el vertex shader hacía bien la deformación. Después moví el mouse hacia arriba y hacia abajo para verificar el cambio de color; observé que cuando el mouse estaba arriba el color cambiaba lentamente, y cuando bajaba se aceleraba, confirmando que el fragment shader y la lógica en update() funcionaban correctamente. También probé ajustar el rango de influencia (mouseRange) para ver cómo variaba la deformación y ejecuté la aplicación varias veces para confirmar que no hubiera errores visuales ni de rendimiento. Así verifiqué que toda la aplicación trabajaran de forma correcta y coordinada.
+
+***Código de ofApp.cpp para que el plano se incline dependiendo de la posicion en X del mouse***
+```cpp
+#include "ofApp.h"
+
+//--------------------------------------------------------------
+void ofApp::setup() {
+	if (ofIsGLProgrammableRenderer()) {
+		shader.load("shadersGL3/shader");
+	} else {
+		shader.load("shadersGL2/shader");
+	}
+
+	int planeWidth = ofGetWidth();
+	int planeHeight = ofGetHeight();
+	int planeGridSize = 20;
+	int planeCols = planeWidth / planeGridSize;
+	int planeRows = planeHeight / planeGridSize;
+
+	plane.set(planeWidth, planeHeight, planeCols, planeRows, OF_PRIMITIVE_TRIANGLES);
+
+	hue = 0.0f;
+
+	ofEnableDepthTest();
+	ofSetFrameRate(60);
+	ofSetWindowTitle("Deformación cúbica interactiva");
+}
+
+//--------------------------------------------------------------
+void ofApp::update() {
+	float speed = ofMap(mouseY, 0, ofGetHeight(), 0.5, 3.0, true);
+	hue += speed;
+
+	if (hue > 255) hue -= 255;
+}
+
+//--------------------------------------------------------------
+void ofApp::draw() {
+	ofBackground(0);
+
+	shader.begin();
+
+	float cx = ofGetWidth() / 2.0;
+	float cy = ofGetHeight() / 2.0;
+
+	float mx = mouseX - cx;
+	float my = mouseY - cy;
+
+	shader.setUniform1f("mouseRange", 150);
+	shader.setUniform2f("mousePos", mx, my);
+
+	ofColor c = ofColor::fromHsb(fmod(hue, 255), 255, 255);
+	float mouseColor[4] = { c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, 1.0f };
+	shader.setUniform4fv("mouseColor", mouseColor);
+
+	ofPushMatrix();
+
+	ofTranslate(cx, cy, 0);
+
+	float rotationX = ofMap(mouseY, 0, ofGetHeight(), -30, 30, true);
+	float rotationY = ofMap(mouseX, 0, ofGetWidth(), -60, 60, true);
+	ofRotateXDeg(rotationX);
+	ofRotateYDeg(rotationY);
+
+	plane.drawWireframe();
+
+	ofPopMatrix();
+
+	shader.end();
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key) { }
+void ofApp::keyReleased(int key) { }
+void ofApp::mouseMoved(int x, int y) { }
+void ofApp::mouseDragged(int x, int y, int button) { }
+void ofApp::mousePressed(int x, int y, int button) { }
+void ofApp::mouseReleased(int x, int y, int button) { }
+void ofApp::windowResized(int w, int h) { }
+void ofApp::dragEvent(ofDragInfo dragInfo) { }
+void ofApp::gotMessage(ofMessage msg) { }
+
+```
