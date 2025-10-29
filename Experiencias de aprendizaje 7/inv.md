@@ -1,0 +1,755 @@
+### Actividad 1
+
+**¿Qué son los vértices?**
+
+Los vértices son puntos que marcan las esquinas de una figura en 3D. Cada triángulo, cubo o cualquier forma está hecha por varios vértices conectados entre sí.
+
+**¿Con qué figura geométrica se dibuja en 3D?**
+
+En 3D todo se dibuja con triángulos. Las formas más complejas se construyen uniendo muchos triángulos pequeños.
+
+**¿Qué es un shader?**
+
+Un shader es un programa que corre en la GPU y le dice cómo deben verse las cosas. Por ejemplo, puede controlar los colores, las luces o las texturas de un objeto.
+
+**¿Cómo se le llaman a los grupos de píxeles de un mismo triángulo?**
+
+A esos grupos se les llama fragmentos o fragments. Cada fragmento representa un posible píxel en pantalla del triángulo.
+
+**¿Qué es un fragment shader?**
+
+Es un tipo de shader que se encarga de decidir el color final de cada fragmento (píxel). Aquí se aplican efectos como sombras, brillos o texturas.
+
+**¿Qué es un vertex shader?**
+
+Es un shader que trabaja con los vértices. Se encarga de moverlos, rotarlos o escalarlos para que el objeto se vea en la posición correcta en la pantalla.
+
+**¿Al proceso de determinar qué píxeles del display va a cubrir cada triángulo de una mesh se le llama?**
+
+Ese proceso se llama rasterización. Es cuando los triángulos se transforman en píxeles visibles.
+
+**¿Qué es el render pipeline?**
+
+Es el camino o proceso que sigue la información desde que se crean los vértices hasta que se muestra la imagen final en la pantalla. Incluye varias etapas como los shaders, la rasterización y el pintado.
+
+**¿Hay alguna diferencia entre aplicar un color a una superficie de una mesh o aplicar una textura?**
+
+Sí. Aplicar un color es algo fijo (todo el objeto se ve igual), mientras que una textura es una imagen que se “pega” sobre la superficie para darle más detalle.
+
+**¿Cuál es la diferencia entre una textura y un material?**
+
+Una textura es solo una imagen, pero un material puede incluir más propiedades, como el color base, el brillo, la transparencia o cómo refleja la luz.
+
+**¿Qué transformaciones se requieren para mover un vértice del 3D world al View Screen?**
+
+Se hacen tres transformaciones principales:
+
+World transform: mueve el objeto dentro del mundo 3D.
+
+View transform: cambia la vista según la cámara.
+
+Projection transform: convierte la escena 3D en una vista 2D que se puede mostrar en pantalla.
+
+**¿Al proceso de convertir los triángulos en fragmentos se le llama?**
+
+Se le llama rasterización (igual que antes). Es cuando el triángulo se convierte en muchos fragmentos o píxeles.
+
+**¿Qué es el framebuffer?**
+
+Es una parte de la memoria donde se guarda la imagen final antes de mostrarse en la pantalla. Es como el “borrador” donde la GPU pinta todo.
+
+**¿Para qué se usa el Z-buffer o depth buffer en el render pipeline?**
+
+Sirve para saber qué objetos están más cerca o más lejos de la cámara. Así, si un objeto está detrás de otro, no se dibuja encima por error.
+
+### Actividad 2
+
+
+#### Ejemplo 1
+
+**¿Cómo funciona?**
+
+El programa carga un shader y lo aplica a un rectángulo que cubre toda la pantalla. En el método draw(), el shader se activa, se dibuja el rectángulo y luego se desactiva. Todo lo que se dibuje entre shader.begin() y shader.end() es procesado por la GPU y se modifica según las instrucciones del shader.
+
+**¿Qué resultados obtuviste?**
+
+![alt text](<Screenshot 2025-10-22 150035.png>)
+
+**¿Estás usando un vertex shader?**
+
+Sí, se utiliza un vertex shader para determinar la posición de cada vértice del modelo en la pantalla.
+
+**¿Estás usando un fragment shader?**
+
+Sí, se está usando un fragment shader para decidir el color y la apariencia de cada píxel en la pantalla.
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
+
+El vertex shader se encarga de indicar al programa la posición exacta de los puntos del rectángulo para que se dibuje correctamente. En cambio, el fragment shader determina el color que tendrá cada parte del dibujo.
+
+#### Ejemplo 2
+
+**¿Cómo funciona?**
+
+Genera un plano 3D en el centro de la pantalla que se va deformando mediante el shader. El color varía dependiendo de la posición del mouse en el eje X (pasando de rosado a azul), y el plano rota cuando se mueve el mouse en el eje Y.
+
+**¿Qué resultados obtuviste?**
+
+![alt text](<Screenshot 2025-10-22 145734.png>)
+
+**¿Estás usando un vertex shader?**
+
+Sí, se está utilizando un vertex shader para calcular la posición de los vértices del plano.
+
+**¿Estás usando un fragment shader?**
+
+Sí, se está utilizando un fragment shader para definir los colores que aparecen en el plano.
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
+
+El vertex shader modifica la posición de los puntos del plano para generar la deformación, mientras que el fragment shader aplica los colores, haciendo que varíen de rosado a azul según la posición del mouse.
+
+#### Ejemplo 3
+
+**¿Cómo funciona?**
+
+El programa dibuja un plano grande en la pantalla y le aplica un shader que reacciona al movimiento del mouse. Según la dirección en que se mueva, los colores cambian entre rosado, morado y azul. Además, al mover el mouse, el plano se deforma visualmente, creando un efecto similar al de una burbuja.
+
+**¿Qué resultados obtuviste?**
+
+![alt text](<Screenshot 2025-10-22 150557.png>)
+
+**¿Estás usando un vertex shader?**
+
+Sí, se está utilizando un vertex shader para controlar los puntos del plano y generar la deformación que le da el efecto de burbuja.
+
+**¿Estás usando un fragment shader?**
+
+Sí, se está utilizando un fragment shader para generar los colores del plano y hacer que varíen según la posición del mouse en el eje X.
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
+
+El vertex shader modifica la forma o posición del plano según los valores que recibe, como la ubicación del mouse, mientras que el fragment shader se encarga de colorearlo, haciendo que el tono cambie de magenta a azul según la posición del cursor.
+
+#### Ejemplo 4
+
+**¿Cómo funciona?**
+
+Se carga una imagen de rectangulos raros de colores sobre un plano, y el shader se encarga de detectar y seguir el movimiento del mouse para mover el plano en pantalla.
+
+**¿Qué resultados obtuviste?**
+
+![alt text](<Screenshot 2025-10-22 151200.png>)
+
+**¿Estás usando un vertex shader?**
+
+Sí, se utiliza un vertex shader para mover los puntos del plano y ajustar su apariencia según la posición del mouse.
+
+**¿Estás usando un fragment shader?**
+
+Sí, también se utiliza un fragment shader para modificar los colores y aplicar efectos visuales a la imagen.
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
+
+El vertex shader ajusta la posición del plano y la textura de acuerdo con el movimiento del mouse, mientras que el fragment shader se encarga de dibujar la imagen y aplicar los efectos visuales que se observan en pantalla.
+
+#### Ejemplo 5
+
+**¿Cómo funciona?**
+
+Se cargan dos imágenes: una con los diamantes de colores originales y otra que funciona como máscara. Luego, un shader combina ambas para generar un efecto de “masking”, donde una imagen se muestra solo en las partes definidas por la máscara.
+
+**¿Qué resultados obtuviste?**
+
+![alt text](<Screenshot 2025-10-22 151721.png>)
+
+**¿Estás usando un vertex shader?**
+
+Sí, se utiliza un vertex shader, que se encarga de organizar los puntos de la imagen y enviarlos a la siguiente etapa del proceso de renderizado.
+
+**¿Estás usando un fragment shader?**
+
+Sí, se utiliza un fragment shader, ya que es el encargado de colorear los píxeles y combinar la imagen original con la máscara para crear el efecto visual final.
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
+
+El vertex shader ajusta la forma y posición de la imagen, mientras que el fragment shader mezcla los colores de las dos imágenes para generar el efecto de máscara, mostrando únicamente las zonas que la máscara permite ver.
+
+#### Ejemplo 6
+
+**¿Cómo funciona?**
+
+El programa utiliza una cámara, un video y una imagen, y los combina mediante una máscara que se mueve con el mouse. El shader se encarga de fusionar estos elementos y mostrar el resultado final dentro de un recuadro en pantalla.
+
+**¿Qué resultados obtuviste?**
+
+![alt text](<Screenshot 2025-10-22 151901.png>)
+
+**¿Estás usando un vertex shader?**
+
+Sí, se utiliza un vertex shader para controlar la posición de los vértices, es decir, para definir cómo se dibujan y colocan las formas en la pantalla.
+
+**¿Estás usando un fragment shader?**
+
+Sí, se utiliza un fragment shader, ya que es el encargado de asignar los colores finales a cada píxel y de combinar las texturas (imagen, video y cámara) de acuerdo con la máscara.
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
+
+El vertex shader define la forma y el tamaño de la imagen en pantalla, mientras que el fragment shader combina los colores de las tres fuentes (cámara, video e imagen) aplicando la máscara para generar el efecto visual final.
+
+#### Ejemplo 7
+
+**¿Cómo funciona?**
+
+El programa permite pintar en la pantalla con una brocha, y lo que se dibuja funciona como una máscara. Un shader combina varias imágenes y muestra únicamente las zonas donde se ha pintado. Además, es posible borrar, modificar el tamaño del pincel y ponerlo como en una camara termica.
+
+**¿Qué resultados obtuviste?**
+
+![alt text](<Screenshot 2025-10-22 152117.png>)
+![alt text](<Screenshot 2025-10-22 152039.png>)
+
+**¿Estás usando un vertex shader?**
+
+Sí, se utiliza un vertex shader para organizar los puntos donde se dibujan las imágenes en la pantalla y definir su posición dentro del espacio visual.
+
+**¿Estás usando un fragment shader?**
+
+Sí, se utiliza un fragment shader, ya que es el encargado de aplicar los colores y combinar las texturas según las zonas que se pintan con la máscara.
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
+
+El vertex shader organiza la forma y posición donde se dibuja todo, mientras que el fragment shader combina las imágenes y genera el efecto visual final que aparece al pintar.
+
+#### Ejemplo 8
+
+**¿Cómo funciona?**
+
+El programa genera una imagen en blanco y negro con un patrón de ruido que varía con el tiempo y según el movimiento del mouse. Esta imagen se utiliza como textura sobre un plano 3D que rota al mover el cursor.
+
+**¿Qué resultados obtuviste?**
+
+![alt text](<Screenshot 2025-10-22 152327.png>)
+
+**¿Estás usando un vertex shader?**
+
+Sí, se utiliza un vertex shader para mover y rotar los puntos del plano dentro del espacio 3D.
+
+**¿Estás usando un fragment shader?**
+
+Sí, se utiliza un fragment shader, ya que es el encargado de aplicar los colores y mostrar la textura del ruido sobre la superficie del plano.
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
+
+El vertex shader ajusta la forma y la rotación del plano, mientras que el fragment shader colorea los píxeles con la textura cambiante, generando el efecto de movimiento.
+
+#### Ejemplo 9
+
+**¿Cómo funciona?**
+
+El programa carga una imagen y le aplica un efecto de desenfoque. Utiliza dos shaders: uno realiza el desenfoque en dirección horizontal y el otro en dirección vertical. Además, el nivel de desenfoque varía según el movimiento del mouse.
+
+**¿Qué resultados obtuviste?**
+
+![alt text](<Screenshot 2025-10-22 152434.png>)
+
+**¿Estás usando un vertex shader?**
+
+Sí, se utiliza un vertex shader, aunque en este caso solo cumple la función de posicionar correctamente la imagen en la pantalla.
+
+**¿Estás usando un fragment shader?**
+
+Sí, se utiliza un fragment shader, que es el encargado de realizar el desenfoque mezclando los colores de los píxeles para producir el efecto borroso.
+
+**Analiza el código de los shaders. ¿Qué hace cada uno?**
+
+- El shaderBlurX aplica el desenfoque en el eje horizontal (X), mezclando varios píxeles vecinos de izquierda a derecha para generar un efecto borroso en esa dirección.
+
+- El shaderBlurY realiza el mismo proceso pero en el eje vertical (Y), combinando los píxeles de arriba a abajo.
+Al trabajar juntos, ambos shaders producen un desenfoque uniforme en todas las direcciones de la imagen.
+
+### Actividad 3
+
+**¿Qué es un uniform?**
+
+Variable global y constante que se envia de la CPU a la GPU.
+
+**¿Cómo funciona el código de aplicación, los shaders y cómo se comunican estos?**
+
+En una aplicación que usa gráficos por computadora (como juegos o programas 3D), el trabajo se divide entre dos partes principales: el código de la aplicación y los shaders.
+
+El código de la aplicación (normalmente escrito en C++, C#, o JavaScript, según el motor o librería que se use) se ejecuta en el CPU.
+Este código se encarga de:
+
+- Crear la ventana o el entorno donde se dibuja.
+
+- Cargar modelos, texturas, luces y cámaras.
+
+- Enviar los datos a la tarjeta gráfica (GPU).
+
+- Decirle a la GPU qué shader usar y con qué valores.
+
+Los shaders, en cambio, son pequeños programas que se ejecutan en la GPU.
+Están escritos en lenguajes como GLSL o HLSL, y se encargan de dibujar los píxeles y procesar los vértices de los objetos.
+
+Por ejemplo:
+
+- El vertex shader calcula la posición de cada punto (vértice) del modelo.
+
+- El fragment shader calcula el color final de cada fragmento (píxel) en la pantalla.
+
+***Comunicación entre ambos:***
+El código de la aplicación manda datos a los shaders por medio de variables uniformes o buffers.
+Por ejemplo, puede enviar la posición de la cámara, la intensidad de la luz o el color del objeto.
+El shader recibe esa información y la usa para calcular cómo se debe ver la imagen final.
+
+**Modifica el código de la actividad para cambiar el color de cada uno de los píxeles de la pantalla personalizando el fragment shader.**
+
+***Cambios en el código***
+
+shaderfrag GL3
+```cpp
+#version 150
+
+uniform float time;
+uniform vec4 globalColor;
+
+out vec4 outputColor;
+
+void main()
+{
+    // Normaliza coordenadas del fragmento entre 0 y 1
+    vec2 uv = gl_FragCoord.xy / vec2(1024.0, 768.0); // usa el tamaño de la ventana
+
+    // Crea un efecto de ondas de color animadas
+    float wave = sin((uv.x + time * 0.5) * 6.2831) * 0.5 + 0.5;
+
+    // Gradiente basado en Y y onda temporal
+    vec3 color = mix(vec3(uv.y, wave, 1.0 - uv.x), globalColor.rgb, 0.3);
+
+    outputColor = vec4(color, 1.0);
+}
+
+```
+
+shaderfrag GL2
+```cpp
+precision mediump float;
+
+uniform float time;
+uniform vec4 globalColor;
+
+void main()
+{
+    vec2 uv = gl_FragCoord.xy / vec2(1024.0, 768.0);
+    float wave = sin((uv.x + time * 0.5) * 6.2831) * 0.5 + 0.5;
+    vec3 color = mix(vec3(uv.y, wave, 1.0 - uv.x), globalColor.rgb, 0.3);
+    gl_FragColor = vec4(color, 1.0);
+}
+
+```
+
+ofApp::draw()
+```cpp
+shader.setUniform1f("time", ofGetElapsedTimef());
+
+```
+
+![alt text](<Screenshot 2025-10-27 162416.png>)
+
+### Actividad 4
+
+**¿Qué hace el código del ejemplo?**
+
+El código muestra un plano con una imagen en el centro de la pantalla y permite que cambie visualmente cuando el usuario mueve el mouse. A medida que se mueve el mouse, la textura parece desplazarse y el color pasa de magenta a azul, creando un efecto interactivo. En otras palabras, el programa combina una imagen, el movimiento del mouse y los shaders para generar una animación visual en tiempo real.
+
+**¿Cómo funciona el código de aplicación, los shaders y cómo se comunican estos?**
+
+El código de la aplicación en C++ se encarga de configurar la ventana, cargar la imagen, preparar el plano y enviar al shader la información del mouse y el color. Los shaders son programas que corren en la tarjeta gráfica: el vertex shader ajusta la posición y las coordenadas del plano, y el fragment shader pinta cada píxel con el color y la textura. Ambos se comunican con el código de la aplicación por medio de variables llamadas uniforms, que permiten que el shader reciba valores desde el programa principal, como la posición del mouse o el color, para crear los efectos visuales interactivos.
+
+**Realiza modificaciones a ofApp.cpp y al vertex shader para conseguir otros comportamientos y Realiza modificaciones al fragment shader para conseguir otros comportamientos.**
+
+ofApp.cpp
+```cpp
+#include "ofApp.h"
+
+//--------------------------------------------------------------
+void ofApp::setup() {
+	ofDisableArbTex();
+
+	if(ofIsGLProgrammableRenderer()){
+		shader.load("shadersGL3/shader");
+	}else{
+		shader.load("shadersGL2/shader");
+	}
+
+	if(img.load("img.jpg")) {
+		img.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
+	}
+
+	plane.set(800, 600, 100, 100); // más subdivisiones para que la onda se note mejor
+	plane.mapTexCoords(0, 0, img.getWidth(), img.getHeight());
+	ofSetFrameRate(60);
+}
+
+//--------------------------------------------------------------
+void ofApp::update() {
+
+}
+
+//--------------------------------------------------------------
+void ofApp::draw() {
+	ofBackground(0);
+
+	shader.begin();
+
+	// Centro de la pantalla
+	float cx = ofGetWidth() / 2.0;
+	float cy = ofGetHeight() / 2.0;
+	ofTranslate(cx, cy);
+
+	// Enviamos valores al shader (uniforms)
+	shader.setUniform1f("time", ofGetElapsedTimef());
+	shader.setUniform2f("mousePos", mouseX - cx, mouseY - cy);
+	shader.setUniform1f("amplitude", ofMap(mouseY, 0, ofGetHeight(), 5, 50)); // controla altura de la onda
+
+	// Cambia el color base dependiendo del mouse
+	float percentX = mouseX / (float)ofGetWidth();
+	ofFloatColor colorLeft = ofColor::cyan;
+	ofFloatColor colorRight = ofColor::magenta;
+	ofFloatColor colorMix = colorLeft.getLerped(colorRight, percentX);
+	shader.setUniform4f("baseColor", colorMix);
+
+	img.bind();
+	plane.draw(); // dibuja el plano con textura
+	img.unbind();
+
+	shader.end();
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key){ }
+void ofApp::keyReleased(int key){ }
+void ofApp::mouseMoved(int x, int y){ }
+void ofApp::mouseDragged(int x, int y, int button){ }
+void ofApp::mousePressed(int x, int y, int button){ }
+void ofApp::mouseReleased(int x, int y, int button){ }
+void ofApp::windowResized(int w, int h){ }
+void ofApp::gotMessage(ofMessage msg){ }
+void ofApp::dragEvent(ofDragInfo dragInfo){ }
+
+```
+
+shader.vert
+```cpp
+#version 150
+
+uniform mat4 modelViewProjectionMatrix;
+uniform float time;
+uniform vec2 mousePos;
+uniform float amplitude;
+
+in vec4 position;
+in vec2 texcoord;
+
+out vec2 texCoordVarying;
+
+void main() {
+    // Crea un efecto de onda en la superficie
+    float wave = sin(position.x * 0.05 + time * 2.0) * amplitude;
+    float wave2 = cos(position.y * 0.05 + time * 1.5) * amplitude * 0.5;
+
+    vec4 modifiedPosition = position;
+    modifiedPosition.z += wave + wave2;
+
+    texCoordVarying = texcoord;
+
+    gl_Position = modelViewProjectionMatrix * modifiedPosition;
+}
+
+```
+
+shader.frag
+```cpp
+#version 150
+
+uniform sampler2D tex0;
+uniform vec4 baseColor;
+
+in vec2 texCoordVarying;
+out vec4 outputColor;
+
+void main() {
+    vec4 texColor = texture(tex0, texCoordVarying / 512.0);
+    outputColor = texColor * baseColor;
+}
+
+```
+
+![alt text](<Screenshot 2025-10-27 164831.png>)
+
+En esta versión el programa fue modificado para que el plano tenga movimiento y cambie de color según el mouse. En el código de C++ se añadieron nuevas variables que se envían al shader, como el tiempo, la posición del mouse y una amplitud que controla la altura de las ondas. En el vertex shader se usaron funciones seno y coseno para mover los vértices y crear un efecto de ondas animadas, mientras que el fragment shader mezcla la textura con un color que cambia de cian a magenta según la posición del mouse. Esto hace que la imagen se vea viva y responda al movimiento del usuario.
+
+## Reto
+
+**Con lo que aprendiste en esta unidad vas a realizar una aplicación interactiva que utilice shaders.**
+
+**RAE1**
+
+**La construcción de la aplicación que propone el reto.**
+
+- Tomé como referencia el ejemplo 3.
+
+- Antes, el plano se deformaba en forma de esfera alrededor del mouse porque el shader medía la distancia con una raíz cuadrada, que genera un movimiento circular.
+
+- Luego cambié eso por una distancia cúbica, que mide los lados en forma cuadrada. Por eso, la deformación parece una caja que empuja los vértices.
+
+- También hice que el color cambie más rápido cuando el mouse está abajo y más lento cuando está arriba, usando la posición vertical para modificar la velocidad del cambio de color.
+
+**Vas a explicar detalladamente cómo funciona la aplicación.**
+
+- La aplicación crea un plano lleno de pequeños vértices que se deforma cuando movemos el mouse, haciendo que parezca que una figura cúbica empuja la superficie. Esto se logra con un shader que cambia la posición de los puntos del plano según la distancia al mouse, pero usando una forma cuadrada en vez de redonda. Además, el color del plano va cambiando constantemente, y la velocidad de ese cambio depende de la posición vertical del mouse: si el mouse está arriba, el cambio de color es lento, y si está abajo, el color cambia más rápido. Todo esto se dibuja en tiempo real, generando un efecto visual dinámico e interactivo.
+
+**El código fuente de tu aplicación.**
+
+***ofApp.h***
+```cpp
+#pragma once
+#include "ofMain.h"
+
+class ofApp : public ofBaseApp {
+public:
+	void setup();
+	void update();
+	void draw();
+
+	void keyPressed(int key);
+	void keyReleased(int key);
+	void mouseMoved(int x, int y);
+	void mouseDragged(int x, int y, int button);
+	void mousePressed(int x, int y, int button);
+	void mouseReleased(int x, int y, int button);
+	void windowResized(int w, int h);
+	void dragEvent(ofDragInfo dragInfo);
+	void gotMessage(ofMessage msg);
+
+	ofShader shader;
+	ofPlanePrimitive plane;
+
+	float hue;
+};
+```
+
+***ofApp.cpp***
+```cpp
+#include "ofApp.h"
+
+//--------------------------------------------------------------
+void ofApp::setup() {
+	if (ofIsGLProgrammableRenderer()) {
+		shader.load("shadersGL3/shader");
+	} else {
+		shader.load("shadersGL2/shader");
+	}
+
+	int planeWidth = ofGetWidth();
+	int planeHeight = ofGetHeight();
+	int planeGridSize = 20;
+	int planeCols = planeWidth / planeGridSize;
+	int planeRows = planeHeight / planeGridSize;
+
+	plane.set(planeWidth, planeHeight, planeCols, planeRows, OF_PRIMITIVE_TRIANGLES);
+	hue = 0.0f;
+
+	ofSetFrameRate(60);
+	ofSetWindowTitle("Deformación cúbica interactiva");
+}
+
+//--------------------------------------------------------------
+void ofApp::update() {
+	float speed = ofMap(mouseY, 0, ofGetHeight(), 0.5, 3.0, true);
+	hue += speed;
+
+	if (hue > 255) hue -= 255;
+}
+
+//--------------------------------------------------------------
+void ofApp::draw() {
+	shader.begin();
+
+	float cx = ofGetWidth() / 2.0;
+	float cy = ofGetHeight() / 2.0;
+
+	float mx = mouseX - cx;
+	float my = mouseY - cy;
+
+	shader.setUniform1f("mouseRange", 150);
+	shader.setUniform2f("mousePos", mx, my);
+
+	ofColor c = ofColor::fromHsb(fmod(hue, 255), 255, 255);
+	float mouseColor[4] = { c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, 1.0f };
+	shader.setUniform4fv("mouseColor", mouseColor);
+
+	ofTranslate(cx, cy);
+	plane.drawWireframe();
+
+	shader.end();
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key) { }
+void ofApp::keyReleased(int key) { }
+void ofApp::mouseMoved(int x, int y) { }
+void ofApp::mouseDragged(int x, int y, int button) { }
+void ofApp::mousePressed(int x, int y, int button) { }
+void ofApp::mouseReleased(int x, int y, int button) { }
+void ofApp::windowResized(int w, int h) { }
+void ofApp::dragEvent(ofDragInfo dragInfo) { }
+void ofApp::gotMessage(ofMessage msg) { }
+```
+
+***shader.vert***
+```cpp
+#version 150
+
+uniform mat4 modelViewProjectionMatrix;
+in vec4 position;
+
+uniform float mouseRange;
+uniform vec2 mousePos;
+
+void main() {
+	vec4 pos = position;
+
+	vec2 dir = pos.xy - mousePos;
+
+	float dist = max(abs(dir.x), abs(dir.y));
+
+	if (dist > 0.0 && dist < mouseRange) {
+		float distNorm = dist / mouseRange;
+		distNorm = 1.0 - distNorm;
+		dir *= distNorm;
+
+		pos.x += sign(dir.x) * pow(abs(dir.x), 1.2);
+		pos.y += sign(dir.y) * pow(abs(dir.y), 1.2);
+	}
+
+	gl_Position = modelViewProjectionMatrix * pos;
+}
+```
+
+***shader.frag***
+```cpp
+#version 150
+
+out vec4 outputColor;
+uniform vec4 mouseColor;
+
+void main() {
+	outputColor = mouseColor;
+}
+```
+
+**Video prueba de funcionamiento**
+
+[video](https://youtu.be/qjS1JFlrCzk)
+
+**RAE2**
+
+**Explica y muestra cómo probaste la aplicación en ofApp.cpp.**
+
+- Para probar la aplicación, trabajé directamente desde el archivo ofApp.cpp, donde se ejecutan las funciones principales. Primero, en la función setup() cargué el shader y configuré el plano con varias divisiones para que la deformación se notara bien. Luego, en update() probé cómo cambiaba el color usando la posición del mouse, moviéndolo de arriba hacia abajo para ver si el cambio era lento o rápido según lo esperado. Finalmente, en draw() ejecuté el shader y moví el mouse por toda la ventana para comprobar que la forma que empuja el plano fuera cuadrada, no redonda. Cada vez que corría la aplicación, observaba en la pantalla cómo el plano se deformaba de forma cúbica alrededor del mouse y el color cambiaba según la posición vertical, confirmando que el código funcionaba correctamente.
+
+**Explica y muestra cómo probaste el vertex shader.**
+
+- Para probar el vertex shader, lo hice desde la misma aplicación ejecutando diferentes movimientos del mouse y observando cómo se deformaba el plano en pantalla. En el shader cambié la forma en que se calcula la distancia, usando max(abs(dir.x), abs(dir.y)) para generar una deformación cuadrada en lugar de circular. Luego compilé el programa y moví el mouse por la ventana: si el plano se hundía o se levantaba en forma de caja alrededor del puntero, sabía que el shader estaba funcionando bien. También ajusté el valor de mouseRange para ver cuánto influía el mouse en la deformación; al aumentar ese valor, la “onda cúbica” se extendía más, y al reducirlo, quedaba concentrada. Así confirmé que el vertex shader modificaba correctamente los vértices del plano según la posición del mouse y con la forma cúbica deseada.
+
+**Explica y muestra cómo probaste el fragment shader.**
+
+- Para probar el fragment shader, lo hice ejecutando la aplicación y observando los cambios de color en el plano mientras movía el mouse. En el código del fragment shader solo tengo una línea que asigna el color recibido desde el programa principal (outputColor = mouseColor;), así que la prueba consistió en verificar que ese color realmente cambiara. En ofApp.cpp, modifiqué la variable hue en la función update() para que variara según la posición vertical del mouse: cuando el mouse estaba arriba el color cambiaba lentamente, y cuando bajaba lo hacía más rápido. Al correr la aplicación, moví el cursor de arriba hacia abajo y comprobé que los tonos del plano iban rotando más despacio o más rápido dependiendo de la altura del mouse. Con esto confirmé que el fragment shader estaba recibiendo correctamente el color enviado desde la aplicación y lo aplicaba en tiempo real a toda la superficie del plano.
+
+**Explica y muestra cómo probaste toda la aplicación completa.**
+
+- Para probar toda la aplicación completa, primero la compilé y la ejecuté en openFrameworks para asegurarme de que tanto el código de C++ como los shaders funcionaran juntos. Al iniciar, el programa mostró un plano centrado en la pantalla. Luego moví el mouse por diferentes partes de la ventana: al pasar cerca del centro, el plano se deformaba en forma de cubo alrededor del cursor, lo que comprobó que el vertex shader hacía bien la deformación. Después moví el mouse hacia arriba y hacia abajo para verificar el cambio de color; observé que cuando el mouse estaba arriba el color cambiaba lentamente, y cuando bajaba se aceleraba, confirmando que el fragment shader y la lógica en update() funcionaban correctamente. También probé ajustar el rango de influencia (mouseRange) para ver cómo variaba la deformación y ejecuté la aplicación varias veces para confirmar que no hubiera errores visuales ni de rendimiento. Así verifiqué que toda la aplicación trabajaran de forma correcta y coordinada.
+
+***Código de ofApp.cpp para que el plano se incline dependiendo de la posicion en X del mouse***
+```cpp
+#include "ofApp.h"
+
+//--------------------------------------------------------------
+void ofApp::setup() {
+	if (ofIsGLProgrammableRenderer()) {
+		shader.load("shadersGL3/shader");
+	} else {
+		shader.load("shadersGL2/shader");
+	}
+
+	int planeWidth = ofGetWidth();
+	int planeHeight = ofGetHeight();
+	int planeGridSize = 20;
+	int planeCols = planeWidth / planeGridSize;
+	int planeRows = planeHeight / planeGridSize;
+
+	plane.set(planeWidth, planeHeight, planeCols, planeRows, OF_PRIMITIVE_TRIANGLES);
+
+	hue = 0.0f;
+
+	ofEnableDepthTest();
+	ofSetFrameRate(60);
+	ofSetWindowTitle("Deformación cúbica interactiva");
+}
+
+//--------------------------------------------------------------
+void ofApp::update() {
+	float speed = ofMap(mouseY, 0, ofGetHeight(), 0.5, 3.0, true);
+	hue += speed;
+
+	if (hue > 255) hue -= 255;
+}
+
+//--------------------------------------------------------------
+void ofApp::draw() {
+	ofBackground(0);
+
+	shader.begin();
+
+	float cx = ofGetWidth() / 2.0;
+	float cy = ofGetHeight() / 2.0;
+
+	float mx = mouseX - cx;
+	float my = mouseY - cy;
+
+	shader.setUniform1f("mouseRange", 150);
+	shader.setUniform2f("mousePos", mx, my);
+
+	ofColor c = ofColor::fromHsb(fmod(hue, 255), 255, 255);
+	float mouseColor[4] = { c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, 1.0f };
+	shader.setUniform4fv("mouseColor", mouseColor);
+
+	ofPushMatrix();
+
+	ofTranslate(cx, cy, 0);
+
+	float rotationX = ofMap(mouseY, 0, ofGetHeight(), -30, 30, true);
+	float rotationY = ofMap(mouseX, 0, ofGetWidth(), -60, 60, true);
+	ofRotateXDeg(rotationX);
+	ofRotateYDeg(rotationY);
+
+	plane.drawWireframe();
+
+	ofPopMatrix();
+
+	shader.end();
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key) { }
+void ofApp::keyReleased(int key) { }
+void ofApp::mouseMoved(int x, int y) { }
+void ofApp::mouseDragged(int x, int y, int button) { }
+void ofApp::mousePressed(int x, int y, int button) { }
+void ofApp::mouseReleased(int x, int y, int button) { }
+void ofApp::windowResized(int w, int h) { }
+void ofApp::dragEvent(ofDragInfo dragInfo) { }
+void ofApp::gotMessage(ofMessage msg) { }
+
+```
